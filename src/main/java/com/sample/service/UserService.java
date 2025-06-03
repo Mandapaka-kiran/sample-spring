@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,6 +26,16 @@ public class UserService {
                 null,
                 new ParameterizedTypeReference<List<User>>() {}
         );return response.getBody();
+    }
+    public User getUSerById(int id) {
+
+        User user;
+        try {
+            user = restTemplate.getForObject("https://jsonplaceholder.typicode.com/users/" + id, User.class);
+        } catch (Exception e) {
+            throw new RuntimeException("User Not found..");
+        }
+        return user;
     }
 
 }
